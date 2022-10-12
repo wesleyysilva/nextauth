@@ -22,6 +22,7 @@ export const api = axios.create({
 api.interceptors.response.use(response => {
 	return response;
 }, (error: AxiosError<AxiosErrorResponse>) => {
+
 	if (error.response?.status === 401) {
 		if (error.response.data?.code === 'token.expired') {
 
@@ -57,6 +58,8 @@ api.interceptors.response.use(response => {
 					failedRequestQueue.forEach(request => request.onSuccess(token));
 					failedRequestQueue = [];
 
+
+
 				}).catch(err => {
 					failedRequestQueue.forEach(request => request.onFailure(err));
 					failedRequestQueue = [];
@@ -70,9 +73,7 @@ api.interceptors.response.use(response => {
 
 				failedRequestQueue.push({
 					onSuccess: (token: string) => {
-
 						originalConfig.headers.Authorization = `Bearer ${token}`;
-
 						resolve(api(originalConfig));
 					},
 					onFailure: (err: AxiosError) => {
@@ -82,8 +83,11 @@ api.interceptors.response.use(response => {
 
 			});
 
+
 		} else {
 
 		}
+
+
 	}
 });
