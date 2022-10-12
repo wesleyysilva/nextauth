@@ -49,7 +49,10 @@ api.interceptors.response.use(response => {
 						path: '/'
 					});
 
-					api.defaults.headers['Authorization'] = `Bearer ${token}`;
+					//api.defaults.headers['Authorization'] = `Bearer ${token}`;
+					api.defaults.headers.common.Authorization = `Bearer ${token}`;
+					console.log(api.defaults.headers.common.Authorization);
+
 
 					failedRequestQueue.forEach(request => request.onSuccess(token));
 					failedRequestQueue = [];
@@ -68,8 +71,8 @@ api.interceptors.response.use(response => {
 				failedRequestQueue.push({
 					onSuccess: (token: string) => {
 
-						console.log(originalConfig);
-						originalConfig.headers['Authorization'] = `Bearer ${token}`;
+						originalConfig.headers.Authorization = `Bearer ${token}`;
+
 						resolve(api(originalConfig));
 					},
 					onFailure: (err: AxiosError) => {
