@@ -4,6 +4,10 @@ import { AuthContext } from '../contexts/AuthContext';
 
 import styles from '../styles/Home.module.css';
 
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
+import { withSSRCuest, withSSRGuest } from '../utils/withSSRGuest';
+
 export default function Home() {
 
   const [email, setEmail] = useState('');
@@ -30,3 +34,9 @@ export default function Home() {
     </form>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {}
+  };
+});

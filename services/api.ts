@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { parseCookies, setCookie as set_Cookie } from 'nookies';
+import { signOut } from '../contexts/AuthContext';
 
 interface AxiosErrorResponse {
 	code?: string;
@@ -52,13 +53,9 @@ api.interceptors.response.use(response => {
 
 					//api.defaults.headers['Authorization'] = `Bearer ${token}`;
 					api.defaults.headers.common.Authorization = `Bearer ${token}`;
-					console.log(api.defaults.headers.common.Authorization);
-
 
 					failedRequestQueue.forEach(request => request.onSuccess(token));
 					failedRequestQueue = [];
-
-
 
 				}).catch(err => {
 					failedRequestQueue.forEach(request => request.onFailure(err));
@@ -80,14 +77,12 @@ api.interceptors.response.use(response => {
 						reject(err);
 					}
 				});
-
 			});
 
-
 		} else {
-
+			signOut();
 		}
-
-
 	}
+
+	return Promise.reject(error);
 });
