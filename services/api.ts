@@ -3,6 +3,8 @@ import axios, { AxiosError } from 'axios';
 import { parseCookies, setCookie as set_Cookie } from 'nookies';
 import { signOut } from '../contexts/AuthContext';
 
+import decode from 'jwt-decode';
+
 interface AxiosErrorResponse {
 	code?: string;
 }
@@ -51,7 +53,6 @@ api.interceptors.response.use(response => {
 						path: '/'
 					});
 
-					//api.defaults.headers['Authorization'] = `Bearer ${token}`;
 					api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
 					failedRequestQueue.forEach(request => request.onSuccess(token));

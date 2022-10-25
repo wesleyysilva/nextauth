@@ -6,7 +6,7 @@ import styles from '../styles/Home.module.css';
 
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
-import { withSSRCuest, withSSRGuest } from '../utils/withSSRGuest';
+import { withSSRGuest } from '../utils/withSSRGuest';
 
 export default function Home() {
 
